@@ -9,64 +9,44 @@ function addTodos() {
     if(inputValue.trim().length === 0){
         alert('您未輸入內容');
         return;
-    }
-    const newTodo = document.createElement('div');
-    newTodo.classList.add("mt-1","bg-secondary","d-flex","align-items-center","todo")
-    newTodo.innerHTML = `
-        <div class="ps-3 text-light todo-title">${inputValue}</div>
-        <div class="ms-auto d-flex">
-            <div class="btn btn-primary border-radius-0 btn-edit d-block" type="button" id="button-edit">Edit</div> 
-            <div class="btn btn-danger border-radius-0 btn-delete d-block" type="button" id="button-delete">Del</div> 
-        </div>  
+    }else{
+        document.querySelector('.todo-list').innerHTML += `
+        <div class="mt-1 bg-secondary d-flex align-items-center todo">
+            <div class="ps-3 text-light todo-title">${inputValue}</div>
+            <div class="ms-auto d-flex">
+                <div class="btn btn-primary border-radius-0 btn-edit d-block" type="button" id="button-edit">Edit</div> 
+                <div class="btn btn-danger border-radius-0 btn-delete d-block" type="button" id="button-delete">Del</div> 
+            </div>
+        </div>
     `
-
-    document.querySelector('.todo-list').appendChild(newTodo);
-
-    removeBtn();
-    completeTodo();
-
-}
-
-//刪除代辦事項按鈕
-function removeBtn() {
-    let btnDelete = document.querySelectorAll(".btn-delete");
-    btnDelete.forEach(function(item,index){
-        item.addEventListener('click',function(e){
-           e.target.parentElement.parentElement.remove();
-        });
-    });
-};
-
-removeBtn();
-
-//完成增加刪除線
-function completeTodo(){
-    let todos = document.querySelectorAll('.todo');
-    todos.forEach(function(item,index){
-        item.addEventListener('click',function(e){
-            console.log(e.target.firstElementChild.classList.value.includes("completed"));
-            if(e.target.firstElementChild.classList.value.includes("completed") == false){
-                e.target.firstElementChild.classList.add('completed');
-            }else{
-                e.target.firstElementChild.classList.remove('completed');
+    //刪除按鈕
+    let removeBtn = document.querySelectorAll(".btn-delete");
+        for(var i=0; i<removeBtn.length; i++){
+            removeBtn[i].onclick = function(){
+                this.parentElement.parentElement.remove();
             }
-        });
-    })
+        }
+    
+    //完成增加刪除線
+    let todoCompleted = document.querySelectorAll(".todo");
+        for(var i=0; i<todoCompleted.length; i++){
+            todoCompleted[i].onclick = function(e){
+                e.target.firstElementChild.classList.toggle("completed");
+            }
+        }
+
+    let todoTitleCompleted = document.querySelectorAll(".todo-title");
+        for(var i=0; i<todoTitleCompleted.length; i++){
+            todoTitleCompleted[i].onclick = function(e){
+                e.target.classList.toggle("completed");
+            }
+        }
+
+    
+
+    }
+    document.querySelector(".todo-input").value = "";
 }
-
-completeTodo();
-
-//修改代辦事項按鈕
-function editBtn() {
-    let btnEdit = document.querySelectorAll(".btn-edit");
-    btnEdit.forEach(function(item,index){
-        item.addEventListener('click',function(e){
-           console.log(e.target);
-        });
-    });
-};
-
-editBtn();
 
 
 
